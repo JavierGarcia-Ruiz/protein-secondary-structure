@@ -1,0 +1,36 @@
+# Default configuration for protein-secondary-structure benchmark.
+seed: 42
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  n_val: 500              # Held-out proteins from the 10,792 training set for validation
+  batch_size: 32
+  num_workers: 4
+  feature_set: profile    # 'profile' (one-hot + HMM = 50 dims) or 'onehot' (20 dims)
+  max_len: 700            # Clip extreme outliers during training to save VRAM
+
+model:
+  name: cnn_bilstm        # 'cnn', 'cnn_bilstm', 'bilstm_crf', 'transformer'
+  d_in: 50                # 50 with profile, 20 with one-hot
+  d_model: 256
+  n_cnn_layers: 3
+  kernel_sizes: [3, 5, 7]
+  lstm_layers: 2
+  lstm_hidden: 256        # 256 each direction -> 512 total
+  dropout: 0.3
+  q8_classes: 8
+  q3_classes: 3
+
+training:
+  epochs: 25
+  lr: 0.001
+  weight_decay: 0.0001
+  grad_clip: 1.0
+  early_stop_patience: 6
+  mixed_precision: true   # bf16 autocast on RTX 5090
+  q3_loss_weight: 0.3     # Multi-task auxiliary loss weight
+
+evaluation:
+  benchmarks: [cb513, ts115, casp12]
+

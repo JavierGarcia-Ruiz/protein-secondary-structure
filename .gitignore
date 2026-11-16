@@ -1,0 +1,29 @@
+# Data, checkpoints, logs
+data/raw/
+data/processed/
+models/*
+!models/.gitkeep
+logs/
+*.pt
+*.npz
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+dist/
+
+# Experiment trackers
+wandb/
+mlruns/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

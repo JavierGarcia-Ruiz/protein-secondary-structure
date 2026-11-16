@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ssp"
+version = "0.1.0"
+description = "Per-residue protein secondary-structure prediction (Q3/Q8) with CNN, BiLSTM, CRF and Transformer models built from scratch in PyTorch."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Javier Garcia-Ruiz" }]
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.7",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    "umap-learn>=0.5.6",
+    "pyyaml>=6.0",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "jupyter", "nbconvert", "ipykernel"]
+
+[project.scripts]
+ssp-train = "ssp.cli:train_main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "scripts", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
